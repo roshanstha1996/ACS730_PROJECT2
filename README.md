@@ -20,7 +20,7 @@ This project contains Terraform code to deploy a web application on AWS using AS
    ```
 
 ## Credits
-- Your Name
+- Azamat Smailov
 - Member 2
 - Member 3
 - Member 4

@@ -23,7 +23,7 @@ module "launch_template" {
   web_bucket        = aws_s3_bucket.web.id
   ec2_sg_id         = module.security.ec2_sg_id
   instance_type     = var.instance_type
-  user_data_file    = "${path.module}/web/index.html" # Path to static page
+  # REMOVED the invalid user_data_file line here
 }
 
 module "asg" {
@@ -34,4 +34,10 @@ module "asg" {
   min_size              = 1
   max_size              = 4
   alb_target_group_arn  = module.alb.target_group_arn
+}
+
+# We need the S3 bucket resource defined here so we can pass its ID to the module
+resource "aws_s3_bucket" "web" {
+  bucket_prefix = "acs730-project-${var.environment}-"
+  force_destroy = true
 }
