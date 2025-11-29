@@ -41,3 +41,18 @@ resource "aws_s3_bucket" "web" {
   bucket_prefix = "acs730-project-${var.environment}-"
   force_destroy = true
 }
+resource "aws_s3_object" "index" {
+  bucket       = aws_s3_bucket.web.id
+  key          = "index.html"
+  source       = "${path.module}/web/index.html" 
+  content_type = "text/html"
+  etag         = filemd5("${path.module}/web/index.html") 
+}
+
+resource "aws_s3_object" "image" {
+  bucket       = aws_s3_bucket.web.id
+  key          = "images/sample.jpg"
+  source       = "${path.module}/web/images/sample.jpg"
+  content_type = "image/jpeg"
+  etag         = filemd5("${path.module}/web/images/sample.jpg")
+}
