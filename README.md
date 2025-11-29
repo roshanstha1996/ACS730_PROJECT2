@@ -6,7 +6,10 @@ This project contains Terraform code to deploy a web application on AWS using AS
 
 1. Initialize Terraform:
    ```sh
-   terraform init
+   terraform init \
+    -backend-config="bucket=help2223" \
+    -backend-config="key=dev/terraform.tfstate" \
+    -backend-config="region=us-east-1"
    ```
 
 2. Plan the deployment (e.g., for dev environment):
