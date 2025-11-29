@@ -40,6 +40,7 @@ aws s3 cp web/images/ s3://mygroup-dev-bucket/images/ --recursive #REPLACE YOUR 
 
 ## Credits
 - Azamat Smailov
-- Member 2
-- Member 3
-- Member 4
+- Roshan Shrestha
+- Dilip Dawadi
+- Niroj Bagale
+- Karson Rai
