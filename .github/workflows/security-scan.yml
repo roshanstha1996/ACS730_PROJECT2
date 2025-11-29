@@ -1,0 +1,29 @@
+name: Terraform Security Scan
+
+on:
+  push:
+    branches: [ "staging" ]
+  pull_request:
+    branches: [ "prod" ]
+
+jobs:
+  tflint:
+    name: Run Terraform Lint & Security Checks
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v2
+
+    - name: Install TFLint
+      run: |
+        curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
+
+    - name: Initialize TFLint
+      run: tflint --init
+
+    - name: Run TFLint Scan
+      run: tflint --recursive
