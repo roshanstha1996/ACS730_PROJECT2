@@ -1,6 +1,16 @@
 # ACS730 Final Project
-
 This project contains Terraform code to deploy a web application on AWS using ASG and ALB.
+
+### Prerequisites
+Copy your static site to an S3 bucket.
+Create an S3 bucket for each environment for index.html and /images.
+Upload contents of web/ to the S3 bucket via AWS Console or CLI:
+
+```sh
+aws s3 mb s3://mygroup-dev-bucket   #REPLACE YOUR BUCKET
+aws s3 cp web/index.html s3://mygroup-dev-bucket/index.html #REPLACE YOUR BUCKET
+aws s3 cp web/images/ s3://mygroup-dev-bucket/images/ --recursive #REPLACE YOUR BUCKET
+```
 
 ## Deployment Instructions
 
@@ -24,6 +34,8 @@ This project contains Terraform code to deploy a web application on AWS using AS
 
 ## Credits
 - Azamat Smailov
-- Member 2
-- Member 3
-- Member 4
+- Roshan Shrestha
+- Dilip Dawadi
+- Niroj Bagale
+- Karson Rai
+
