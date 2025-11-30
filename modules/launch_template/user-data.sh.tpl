@@ -12,8 +12,8 @@ instance_id=$(curl -s http://169.254.169.254/latest/meta-data/instance-id)
 # Immediate fallback page so the web server responds 200 quickly
 cat > /var/www/html/index.html <<EOF
 <html><body>
-<p style='background:#222;padding:10px;margin-bottom:10px;border-radius:20px;width:300px'>Environment: ${environment}</p>
-<p style='background:#222;padding:10px;margin-bottom:10px;border-radius:20px;width:300px'>Instance ID: $${instance_id}</p>
+<p style='background:#999;padding:10px;margin-bottom:10px;border-radius:20px;width:300px'>Environment: ${environment}</p>
+<p style='background:#999;padding:10px;margin-bottom:10px;border-radius:20px;width:300px'>Instance ID: $${instance_id}</p>
 </body></html>
 EOF
 
@@ -23,8 +23,8 @@ chown apache:apache /var/www/html -R
 (
 	yum install -y aws-cli || true
 	if aws s3 cp "s3://${bucket_name}/index.html" /var/www/html/index.html.tmp; then
-		echo "<p style='background:#222;padding:10px;margin-bottom:10px;border-radius:20px;width:300px'>Environment: ${environment}</p>" >> /var/www/html/index.html.tmp
-		echo "<p style='background:#222;padding:10px;margin-bottom:10px;border-radius:20px;width:300px'>Instance ID: $${instance_id}</p>" >> /var/www/html/index.html.tmp
+		echo "<p style='background:#999;padding:10px;margin-bottom:10px;border-radius:20px;width:300px'>Environment: ${environment}</p>" >> /var/www/html/index.html.tmp
+		echo "<p style='background:#999;padding:10px;margin-bottom:10px;border-radius:20px;width:300px'>Instance ID: $${instance_id}</p>" >> /var/www/html/index.html.tmp
 		mv /var/www/html/index.html.tmp /var/www/html/index.html
 	fi
 	aws s3 cp s3://${bucket_name}/images/ ./images/ --recursive || mkdir images || true

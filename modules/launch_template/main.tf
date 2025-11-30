@@ -22,5 +22,12 @@ resource "aws_launch_template" "this" {
     environment = var.environment
   }))
 
+  tag_specifications {
+    resource_type = "instance"
+    tags = {
+      Name = "${var.environment}-web-server-${substr(uuid(), 0, 8)}"
+    }
+  }
+
   vpc_security_group_ids = [var.ec2_sg_id]
 }

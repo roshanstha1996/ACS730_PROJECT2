@@ -48,6 +48,7 @@ module "asg" {
   min_size             = 1
   max_size             = 4
   alb_target_group_arn = module.alb.target_group_arn
+  environment          = var.environment
 }
 
 # We need the S3 bucket resource defined here so we can pass its ID to the module

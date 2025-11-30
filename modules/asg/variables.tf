@@ -5,3 +5,5 @@ variable "min_size" { type = number }
 variable "max_size" { type = number }
 
 variable "alb_target_group_arn" { type = string }
+
+variable "environment" { type = string }
