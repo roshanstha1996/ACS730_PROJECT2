@@ -2,7 +2,6 @@
 set -euo pipefail
 
 # Usage: ./scripts/destroy-dev.sh [env]
-# Example: ./scripts/destroy-dev.sh dev
 ENV=${1:-dev}
 TFVARS="envs/${ENV}.tfvars"
 
