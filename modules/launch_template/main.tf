@@ -19,6 +19,7 @@ resource "aws_launch_template" "this" {
 
   user_data = base64encode(templatefile("${path.module}/user-data.sh.tpl", {
     bucket_name = var.web_bucket
+    environment = var.environment
   }))
 
   vpc_security_group_ids = [var.ec2_sg_id]
