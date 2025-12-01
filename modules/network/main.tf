@@ -1,14 +1,20 @@
 resource "aws_vpc" "this" {
   cidr_block = var.vpc_cidr
   tags = {
-    Name = "${var.environment}-vpc"
+    Name        = "${var.environment}-vpc"
+    Environment = var.environment
+    Project     = "ACS730-FinalProject"
+    ManagedBy   = "Terraform"
   }
 }
 
 resource "aws_internet_gateway" "this" {
   vpc_id = aws_vpc.this.id
   tags = {
-    Name = "${var.environment}-igw"
+    Name        = "${var.environment}-igw"
+    Environment = var.environment
+    Project     = "ACS730-FinalProject"
+    ManagedBy   = "Terraform"
   }
 }
 data "aws_availability_zones" "available" {}
@@ -20,7 +26,11 @@ resource "aws_subnet" "private" {
   availability_zone       = element(data.aws_availability_zones.available.names, count.index)
   map_public_ip_on_launch = false
   tags = {
-    Name = "${var.environment}-private-${count.index}"
+    Name        = "${var.environment}-private-${count.index}"
+    Environment = var.environment
+    Project     = "ACS730-FinalProject"
+    ManagedBy   = "Terraform"
+    Tier        = "Private"
   }
 }
 
@@ -31,7 +41,11 @@ resource "aws_subnet" "public" {
   availability_zone       = element(data.aws_availability_zones.available.names, count.index)
   map_public_ip_on_launch = true
   tags = {
-    Name = "${var.environment}-public-${count.index}"
+    Name        = "${var.environment}-public-${count.index}"
+    Environment = var.environment
+    Project     = "ACS730-FinalProject"
+    ManagedBy   = "Terraform"
+    Tier        = "Public"
   }
 }
 

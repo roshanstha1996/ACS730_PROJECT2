@@ -8,3 +8,18 @@ output "alb_dns_name" {
   value       = module.alb.dns_name
 }
 
+output "bastion_public_ip" {
+  description = "Public IP address of the Bastion host"
+  value       = module.bastion.bastion_ip
+}
+
+output "vpc_id" {
+  description = "VPC ID"
+  value       = module.network.vpc_id
+}
+
+output "s3_bucket_name" {
+  description = "S3 bucket name for web content"
+  value       = aws_s3_bucket.web.id
+}
+

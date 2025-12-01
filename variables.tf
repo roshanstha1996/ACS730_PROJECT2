@@ -6,6 +6,13 @@ variable "environment" {
     error_message = "environment must be one of: dev, staging, prod"
   }
 }
+
+variable "aws_region" {
+  type        = string
+  description = "AWS region for resources"
+  default     = "us-east-1"
+}
+
 variable "vpc_cidr" { type = string }
 
 variable "key_name" {
