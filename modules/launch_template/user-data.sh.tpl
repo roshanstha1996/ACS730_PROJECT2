@@ -2,36 +2,25 @@
 set -x  # Enable debug logging
 exec > >(tee /var/log/user-data.log) 2>&1
 
-# Install and start httpd immediately
-yum update -y
+# Install and start httpd immediately (skip yum update to save time)
 yum install -y httpd
 systemctl enable httpd
 systemctl start httpd
-
-# Wait for httpd to be fully started
-sleep 5
-systemctl status httpd
 
 # Get instance metadata
 instance_id=$(curl -s http://169.254.169.254/latest/meta-data/instance-id || echo "unknown")
 
 # Create immediate fallback page
-cat > /var/www/html/index.html <<'EOF'
+cat > /var/www/html/index.html <<EOF
 <html><body>
 <p style='background:#999;padding:10px;margin-bottom:10px;border-radius:20px;width:300px'>Environment: ${environment}</p>
-<p style='background:#999;padding:10px;margin-bottom:10px;border-radius:20px;width:300px'>Instance ID: INSTANCE_ID_PLACEHOLDER</p>
+<p style='background:#999;padding:10px;margin-bottom:10px;border-radius:20px;width:300px'>Instance ID: $instance_id</p>
 </body></html>
 EOF
-
-# Replace placeholder with actual instance ID
-sed -i "s/INSTANCE_ID_PLACEHOLDER/$instance_id/g" /var/www/html/index.html
 
 # Set proper permissions
 chown -R apache:apache /var/www/html
 chmod -R 755 /var/www/html
-
-# Restart httpd to ensure it picks up the content
-systemctl restart httpd
 
 # In background: install aws-cli and update site content
 (
