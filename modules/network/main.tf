@@ -1,10 +1,10 @@
 resource "aws_vpc" "this" {
   cidr_block = var.vpc_cidr
   tags = {
-    Name      = "${var.environment}-vpc"
+    Name        = "${var.environment}-vpc"
     Environment = var.environment
-    Project   = "ACS730-FinalProject"
-    ManagedBy = "Terraform"
+    Project     = "ACS730-FinalProject"
+    ManagedBy   = "Terraform"
   }
 }
 

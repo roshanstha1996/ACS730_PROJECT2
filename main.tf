@@ -55,7 +55,7 @@ module "asg" {
 resource "aws_s3_bucket" "web" {
   bucket_prefix = "acs730-project-${var.environment}-"
   force_destroy = true
-  
+
   tags = {
     Name        = "${var.environment}-web-content"
     Environment = var.environment
@@ -72,6 +72,10 @@ resource "aws_s3_bucket_versioning" "web" {
   }
 }
 
+# Using AES256 (AWS managed encryption) instead of KMS Customer Managed Keys
+# because AWS Academy environments don't provide permissions to create/manage KMS keys.
+# AES256 provides server-side encryption that is sufficient for this project.
+# tfsec:ignore:aws-s3-encryption-customer-key
 resource "aws_s3_bucket_server_side_encryption_configuration" "web" {
   bucket = aws_s3_bucket.web.id
 
