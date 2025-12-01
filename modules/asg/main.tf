@@ -1,11 +1,11 @@
 resource "aws_autoscaling_group" "this" {
-  name_prefix               = "asg-"
+  name_prefix               = "${var.environment}-asg-"
   max_size                  = var.max_size
   min_size                  = var.min_size
   desired_capacity          = var.desired_capacity
   vpc_zone_identifier       = var.private_subnets
   health_check_type         = "ELB"
-  health_check_grace_period = 600  # Increased to 10 minutes for slower startup
+  health_check_grace_period = 300
   target_group_arns         = [var.alb_target_group_arn]
 
   launch_template {

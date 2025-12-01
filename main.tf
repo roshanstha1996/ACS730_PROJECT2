@@ -28,6 +28,7 @@ module "alb" {
   public_subnets = module.network.public_subnets
   alb_sg_id      = module.security.alb_sg_id
   ec2_sg_id      = module.security.ec2_sg_id
+  environment    = var.environment
 }
 
 
