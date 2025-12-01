@@ -1,7 +1,12 @@
 resource "aws_security_group" "ec2_sg" {
-  name        = "ec2-sg"
+  name        = "${var.environment}-ec2-sg"
   vpc_id      = var.vpc_id
   description = "EC2 access from Bastion and ALB"
+
+  tags = {
+    Name        = "${var.environment}-ec2-sg"
+    Environment = var.environment
+  }
 
   ingress {
     from_port       = 22
@@ -24,9 +29,14 @@ resource "aws_security_group" "ec2_sg" {
 }
 
 resource "aws_security_group" "alb_sg" {
-  name        = "alb-sg"
+  name        = "${var.environment}-alb-sg"
   vpc_id      = var.vpc_id
   description = "Allow HTTP inbound"
+
+  tags = {
+    Name        = "${var.environment}-alb-sg"
+    Environment = var.environment
+  }
 
   ingress {
     from_port   = 80

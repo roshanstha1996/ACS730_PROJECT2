@@ -19,6 +19,7 @@ module "security" {
   source        = "./modules/security"
   vpc_id        = module.network.vpc_id
   bastion_sg_id = module.bastion.bastion_sg_id
+  environment   = var.environment
 }
 
 module "alb" {
@@ -54,7 +55,7 @@ module "asg" {
 # We need the S3 bucket resource defined here so we can pass its ID to the module
 resource "aws_s3_bucket" "web" {
   bucket_prefix = "acs730-project-${var.environment}-"
-  force_destroy = true
+  force_destroy = var.environment != "prod" ? true : false
 
   tags = {
     Name        = "${var.environment}-web-content"

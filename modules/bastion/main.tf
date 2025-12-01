@@ -25,8 +25,13 @@ resource "aws_instance" "bastion" {
 }
 
 resource "aws_security_group" "bastion_sg" {
-  name   = "bastion-sg"
+  name   = "${var.environment}-bastion-sg"
   vpc_id = var.vpc_id
+
+  tags = {
+    Name        = "${var.environment}-bastion-sg"
+    Environment = var.environment
+  }
 
   ingress {
     from_port   = 22
