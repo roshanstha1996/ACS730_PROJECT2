@@ -37,15 +37,15 @@ resource "aws_autoscaling_policy" "scale_in" {
 }
 
 resource "aws_cloudwatch_metric_alarm" "cpu_high" {
-  alarm_name          = "HighCPU"
+  alarm_name          = "HighCPU-${var.environment}"
   comparison_operator = "GreaterThanThreshold"
   evaluation_periods  = 2
   metric_name         = "CPUUtilization"
   namespace           = "AWS/EC2"
-  period              = 60
+  period              = 120
   statistic           = "Average"
-  threshold           = 10
-  alarm_description   = "Scale out if CPU > 10% for 2 min"
+  threshold           = 70
+  alarm_description   = "Scale out if CPU > 70% for 4 min"
   alarm_actions       = [aws_autoscaling_policy.scale_out.arn]
 
   dimensions = {
@@ -54,15 +54,15 @@ resource "aws_cloudwatch_metric_alarm" "cpu_high" {
 }
 
 resource "aws_cloudwatch_metric_alarm" "cpu_low" {
-  alarm_name          = "LowCPU"
+  alarm_name          = "LowCPU-${var.environment}"
   comparison_operator = "LessThanThreshold"
   evaluation_periods  = 2
   metric_name         = "CPUUtilization"
   namespace           = "AWS/EC2"
-  period              = 60
+  period              = 120
   statistic           = "Average"
-  threshold           = 5
-  alarm_description   = "Scale in if CPU < 5% for 2 min"
+  threshold           = 30
+  alarm_description   = "Scale in if CPU < 30% for 4 min"
   alarm_actions       = [aws_autoscaling_policy.scale_in.arn]
 
   dimensions = {

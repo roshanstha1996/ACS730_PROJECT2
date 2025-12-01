@@ -16,7 +16,11 @@ resource "aws_instance" "bastion" {
   vpc_security_group_ids = [var.bastion_sg_id]
 
   tags = {
-    Name = "${var.environment}-bastion"
+    Name        = "${var.environment}-bastion"
+    Environment = var.environment
+    Project     = "ACS730-FinalProject"
+    ManagedBy   = "Terraform"
+    Role        = "BastionHost"
   }
 }
 

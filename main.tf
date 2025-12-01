@@ -55,8 +55,32 @@ module "asg" {
 resource "aws_s3_bucket" "web" {
   bucket_prefix = "acs730-project-${var.environment}-"
   force_destroy = true
+  
+  tags = {
+    Name        = "${var.environment}-web-content"
+    Environment = var.environment
+    Project     = "ACS730-FinalProject"
+    ManagedBy   = "Terraform"
+    Purpose     = "WebContent"
+  }
 }
 
+resource "aws_s3_bucket_versioning" "web" {
+  bucket = aws_s3_bucket.web.id
+  versioning_configuration {
+    status = "Enabled"
+  }
+}
+
+resource "aws_s3_bucket_server_side_encryption_configuration" "web" {
+  bucket = aws_s3_bucket.web.id
+
+  rule {
+    apply_server_side_encryption_by_default {
+      sse_algorithm = "AES256"
+    }
+  }
+}
 
 resource "aws_s3_object" "index" {
   bucket       = aws_s3_bucket.web.id
