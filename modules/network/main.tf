@@ -61,6 +61,9 @@ resource "aws_nat_gateway" "this" {
 
 resource "aws_route_table" "private" {
   vpc_id = aws_vpc.this.id
+  tags = {
+    Name = "${var.environment}-private-rt"
+  }
 }
 
 resource "aws_route_table" "public" {
@@ -87,9 +90,21 @@ resource "aws_route" "private_nat_route" {
   destination_cidr_block = "0.0.0.0/0"
   nat_gateway_id         = aws_nat_gateway.this.id
 }
+
 resource "aws_route_table_association" "private" {
   count          = length(aws_subnet.private)
   subnet_id      = aws_subnet.private[count.index].id
   route_table_id = aws_route_table.private.id
 }
 
+# Manage the default route table with a name
+resource "aws_default_route_table" "default" {
+  default_route_table_id = aws_vpc.this.default_route_table_id
+  
+  tags = {
+    Name        = "${var.environment}-default-rt"
+    Environment = var.environment
+    Project     = "ACS730-FinalProject"
+    ManagedBy   = "Terraform"
+  }
+}
