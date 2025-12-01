@@ -1,5 +1,5 @@
 resource "aws_autoscaling_group" "this" {
-  name_prefix               = "asg-"
+  name_prefix               = "${var.environment}-asg-"
   max_size                  = var.max_size
   min_size                  = var.min_size
   desired_capacity          = var.desired_capacity
