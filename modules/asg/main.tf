@@ -5,7 +5,8 @@ resource "aws_autoscaling_group" "this" {
   desired_capacity          = var.desired_capacity
   vpc_zone_identifier       = var.private_subnets
   health_check_type         = "ELB"
-  health_check_grace_period = 300
+  health_check_grace_period = 900
+  default_instance_warmup   = 1200  # Wait 20 minutes before scaling decisions
   target_group_arns         = [var.alb_target_group_arn]
 
   launch_template {
